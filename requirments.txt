@@ -1,0 +1,5 @@
+playsound==1.2.2
+librosa==0.8.0
+soundfile==0.10.3
+sounddevice==0.4.1
+PyAudio==0.2.11
