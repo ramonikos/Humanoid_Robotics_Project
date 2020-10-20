@@ -13,6 +13,7 @@ import serial
 # ring buffer will keep the last 2 seconds worth of audio
 ringBuffer = RingBuffer(5 * 22050)
 arduinodata=serial.Serial('com4',57600,timeout=(1))
+tempo=0
 def callback(in_data, frame_count, time_info, flag):
     audio_data = np.frombuffer(in_data, dtype=np.float32)
     
@@ -25,8 +26,16 @@ def callback(in_data, frame_count, time_info, flag):
     tempo, beat_times = librosa.beat.beat_track(onset_envelope=onset_env, sr=22050)
     #tempo = librosa.beat.tempo(ringBuffer.get(), sr=22050, start_bpm=60)
     print("tempo: ", tempo)
-    arduinodata.write(int(tempo))
-    time.sleep(5)
+    if tempo<70:
+        arduinodata.write(b'a')
+    elif tempo<101:
+        arduinodata.write(b'b')
+    elif tempo<131:
+        arduinodata.write(b'c')
+    else:
+        arduinodata.write(b'd')
+    # arduinodata.write(int(tempo))
+    time.sleep(8)
     return (in_data, pyaudio.paContinue)
 
 # function that finds the index of the Soundflower
@@ -51,6 +60,7 @@ stream.start_stream()
 
 while stream.is_active():
     sleep(0.25)
+    arduinodata.write(int(tempo))
 
 stream.close()
 pa.terminate()
