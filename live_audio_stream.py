@@ -30,14 +30,18 @@ def callback(in_data, frame_count, time_info, flag):
     arduinodata.reset_output_buffer()
     if tempo<90:
         arduinodata.write(b'a')
+        time.sleep(4.5)
     elif tempo<121:
         arduinodata.write(b'b')
+        time.sleep(3.5)
     elif tempo<160:
         arduinodata.write(b'c')
+        time.sleep(2.3)
     else:
         arduinodata.write(b'd')
+        time.sleep(1.5)
     # arduinodata.write(int(tempo))
-    time.sleep(2.5) 
+    #time.sleep(2.5) 
     return (in_data, pyaudio.paContinue)
 
 # function that finds the index of the Soundflower
