@@ -37,7 +37,7 @@ def callback(in_data, frame_count, time_info, flag):
     else:
         arduinodata.write(b'd')
     # arduinodata.write(int(tempo))
-    time.sleep(3)
+    time.sleep(2.5) 
     return (in_data, pyaudio.paContinue)
 
 # function that finds the index of the Soundflower
